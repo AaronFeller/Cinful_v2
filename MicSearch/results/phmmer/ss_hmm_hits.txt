@@ -1,0 +1,847 @@
+# phmmer :: search a protein sequence against a protein database
+# HMMER 3.3.2 (Nov 2020); http://hmmer.org/
+# Copyright (C) 2020 Howard Hughes Medical Institute.
+# Freely distributed under the BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query sequence file:             results/signalSeq/SS.verified.aln
+# target sequence database:        results/prodigal/prodigal_out.all.nr.faa
+# output directed to file:         results/phmmer/ss_hmm_hits.txt
+# MSA of hits saved to file:       results/phmmer/ss_hmm_hit2.txt
+# per-seq hits tabular output:     results/phmmer/ss_hmm_tblout.txt
+# per-dom hits tabular output:     results/phmmer/ss_hmm_domtblout.txt
+# pfam-style tabular hit output:   results/phmmer/ss_hmm_pfamtblout.txt
+# number of worker threads:        4
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       V_ECOLX_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence                                                                Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------                                                                -----------
+    6.6e-06   21.0   0.1    3.5e-05   19.1   0.1    2.1  1  v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  
+
+
+Domain annotation for each sequence (and alignments):
+>> v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   19.1   0.1   7.3e-09   3.5e-05       1      15 []       1      15 [.       1      15 [. 0.97
+
+  Alignments for each domain:
+  == domain 1  score: 19.1 bits;  conditional E-value: 7.3e-09
+                                                         V_ECOLX_classIIa  1 mrtltlneldsvsgg 15
+                                                                             mrtltlneldsvsgg
+  v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  1 MRTLTLNELDSVSGG 15
+                                                                             8*************8 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        58  (0.0119415); expected 97.1 (0.02)
+Passed bias filter:                       53  (0.0109121); expected 97.1 (0.02)
+Passed Vit filter:                         2  (0.000411777); expected 4.9 (0.001)
+Passed Fwd filter:                         1  (0.000205888); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               1  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1166.64
+//
+# Alignment of 1 hits satisfying inclusion thresholds saved to: results/phmmer/ss_hmm_hit2.txt
+Query:       L_ECOLX_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence                                                                Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------                                                                -----------
+  ------ inclusion threshold ------
+      0.033   11.1   0.0       0.19    9.2   0.0    2.1  1  v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  
+
+
+Domain annotation for each sequence (and alignments):
+>> v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?    9.2   0.0   3.8e-05      0.19       1      14 [.       1      14 [.       1      15 [. 0.92
+
+  Alignments for each domain:
+  == domain 1  score: 9.2 bits;  conditional E-value: 3.8e-05
+                                                         L_ECOLX_classIIa  1 mreitlnemnnvsg 14
+                                                                             mr +tlne+++vsg
+  v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6  1 MRTLTLNELDSVSG 14
+                                                                             799**********9 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        78  (0.0160593); expected 97.1 (0.02)
+Passed bias filter:                       74  (0.0152357); expected 97.1 (0.02)
+Passed Vit filter:                         4  (0.000823554); expected 4.9 (0.001)
+Passed Fwd filter:                         1  (0.000205888); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               1  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1232.84
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       N_ECOLX_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        60  (0.0123533); expected 97.1 (0.02)
+Passed bias filter:                       53  (0.0109121); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1155.49
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       PDI_ECOLX_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        91  (0.0187358); expected 97.1 (0.02)
+Passed bias filter:                       86  (0.0177064); expected 97.1 (0.02)
+Passed Vit filter:                         4  (0.000823554); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.03u 0.00s 00:00:00.03 Elapsed: 00:00:00.02
+# Mc/sec: 1079.95
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       S_ECOLX_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        70  (0.0144122); expected 97.1 (0.02)
+Passed bias filter:                       67  (0.0137945); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1226.15
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       E492_KLEPN_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        59  (0.0121474); expected 97.1 (0.02)
+Passed bias filter:                       56  (0.0115298); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1203.60
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       H47_ECOLX_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        84  (0.0172946); expected 97.1 (0.02)
+Passed bias filter:                       84  (0.0172946); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.03u 0.00s 00:00:00.03 Elapsed: 00:00:00.02
+# Mc/sec: 1070.69
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       I47_ECOLX_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        61  (0.0125592); expected 97.1 (0.02)
+Passed bias filter:                       58  (0.0119415); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.01u 0.01s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1351.14
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       M_ECOLX_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        62  (0.0127651); expected 97.1 (0.02)
+Passed bias filter:                       58  (0.0119415); expected 97.1 (0.02)
+Passed Vit filter:                         2  (0.000411777); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.03u 0.00s 00:00:00.03 Elapsed: 00:00:00.01
+# Mc/sec: 1170.67
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       G492_KLEPN_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        87  (0.0179123); expected 97.1 (0.02)
+Passed bias filter:                       82  (0.0168828); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1176.47
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       ER14_PAGGL_novel  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        72  (0.014824); expected 97.1 (0.02)
+Passed bias filter:                       68  (0.0140004); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1207.23
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       ER18_MGAVI_novel  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        78  (0.0160593); expected 97.1 (0.02)
+Passed bias filter:                       70  (0.0144122); expected 97.1 (0.02)
+Passed Vit filter:                         8  (0.00164711); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1170.72
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       ER31_PALLI_novel  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        82  (0.0168828); expected 97.1 (0.02)
+Passed bias filter:                       77  (0.0158534); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.01s 00:00:00.03 Elapsed: 00:00:00.01
+# Mc/sec: 1318.81
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       VC1_VIBCH_novel  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        66  (0.0135886); expected 97.1 (0.02)
+Passed bias filter:                       64  (0.0131769); expected 97.1 (0.02)
+Passed Vit filter:                         4  (0.000823554); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1135.68
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       lactacin-F_GP_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        91  (0.0187358); expected 97.1 (0.02)
+Passed bias filter:                       77  (0.0158534); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1319.56
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       amylovorin-L_GP_classIIb  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        91  (0.0187358); expected 97.1 (0.02)
+Passed bias filter:                       87  (0.0179123); expected 97.1 (0.02)
+Passed Vit filter:                         2  (0.000411777); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.01s 00:00:00.03 Elapsed: 00:00:00.02
+# Mc/sec: 1116.55
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       sakacin-P_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        61  (0.0125592); expected 97.1 (0.02)
+Passed bias filter:                       55  (0.0113239); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1234.98
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       piscicolin-126_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        63  (0.012971); expected 97.1 (0.02)
+Passed bias filter:                       56  (0.0115298); expected 97.1 (0.02)
+Passed Vit filter:                         0  (0); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.03u 0.00s 00:00:00.03 Elapsed: 00:00:00.01
+# Mc/sec: 1184.69
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       mesentericin-Y105_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        83  (0.0170887); expected 97.1 (0.02)
+Passed bias filter:                       78  (0.0160593); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1207.19
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       sakacin-A_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        66  (0.0135886); expected 97.1 (0.02)
+Passed bias filter:                       61  (0.0125592); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1238.89
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       pediocin_PA-1_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        79  (0.0162652); expected 97.1 (0.02)
+Passed bias filter:                       74  (0.0152357); expected 97.1 (0.02)
+Passed Vit filter:                         6  (0.00123533); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.01s 00:00:00.03 Elapsed: 00:00:00.01
+# Mc/sec: 1213.16
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       ubericin-A_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        45  (0.00926498); expected 97.1 (0.02)
+Passed bias filter:                       42  (0.00864731); expected 97.1 (0.02)
+Passed Vit filter:                         5  (0.00102944); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1389.21
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       EntA_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        29  (0.00597076); expected 97.1 (0.02)
+Passed bias filter:                       27  (0.00555899); expected 97.1 (0.02)
+Passed Vit filter:                         0  (0); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.01u 0.01s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1200.05
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       leucocin-A_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        76  (0.0156475); expected 97.1 (0.02)
+Passed bias filter:                       74  (0.0152357); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1221.73
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       Enterocin-HF_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        87  (0.0179123); expected 97.1 (0.02)
+Passed bias filter:                       83  (0.0170887); expected 97.1 (0.02)
+Passed Vit filter:                         3  (0.000617665); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.03u 0.00s 00:00:00.03 Elapsed: 00:00:00.01
+# Mc/sec: 1217.77
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       carnobacteriocin-B2_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        68  (0.0140004); expected 97.1 (0.02)
+Passed bias filter:                       60  (0.0123533); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1203.74
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       carnobacteriocin-BM1_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        61  (0.0125592); expected 97.1 (0.02)
+Passed bias filter:                       58  (0.0119415); expected 97.1 (0.02)
+Passed Vit filter:                         4  (0.000823554); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1168.12
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       leucocin-B_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        84  (0.0172946); expected 97.1 (0.02)
+Passed bias filter:                       76  (0.0156475); expected 97.1 (0.02)
+Passed Vit filter:                         6  (0.00123533); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1198.13
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+Query:       curvacin-A_GP_classIIa  [L=15]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+
+   [No hits detected that satisfy reporting thresholds]
+
+
+Domain annotation for each sequence (and alignments):
+
+   [No targets detected that satisfy reporting thresholds]
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                            1  (15 nodes)
+Target sequences:                       4857  (1505075 residues searched)
+Passed MSV filter:                        66  (0.0135886); expected 97.1 (0.02)
+Passed bias filter:                       61  (0.0125592); expected 97.1 (0.02)
+Passed Vit filter:                         1  (0.000205888); expected 4.9 (0.001)
+Passed Fwd filter:                         0  (0); expected 0.0 (1e-05)
+Initial search space (Z):               4857  [actual number of targets]
+Domain search space  (domZ):               0  [number of targets reported over threshold]
+# CPU time: 0.02u 0.00s 00:00:00.02 Elapsed: 00:00:00.01
+# Mc/sec: 1383.20
+//
+# No hits satisfy inclusion thresholds; no alignment saved
+[ok]

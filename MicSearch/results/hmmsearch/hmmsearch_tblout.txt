@@ -1,0 +1,14 @@
+#                                                                                                                  --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name                                                           accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#                                                   ------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+v1_PLS_f46b02a1bfa1c3d276b482deec9926ec13d8dc5b8b8eceeea84e4fda83be41e6 -          SS.verified          -            0.00025   19.3   0.0   0.00067   18.0   0.0   1.8   1   0   0   1   1   1   1 -
+#
+# Program:         hmmsearch
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      results/signalSeq/SS.verified.hmm
+# Target file:     results/prodigal/prodigal_out.all.nr.faa
+# Option settings: hmmsearch --tblout results/hmmsearch/hmmsearch_tblout.txt --cpu 4 results/signalSeq/SS.verified.hmm results/prodigal/prodigal_out.all.nr.faa 
+# Current dir:     /home/aaron/Documents/UT_Austin/wilke_lab/MicSearch
+# Date:            Fri Sep  9 15:48:05 2022
+# [ok]
