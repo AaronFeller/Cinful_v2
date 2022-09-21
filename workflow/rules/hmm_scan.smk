@@ -3,6 +3,7 @@ rule mafft_ss:
         "resources/input/ss_verified.fa"
     output:
         "results/mafft/ss_mafft.aln"
+    threads:workflow.cores * 0.75
     shell:
         "mafft --auto --globalpair --maxiterate 10 --reorder --nuc {input} > {output}"
 

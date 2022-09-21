@@ -1,6 +1,6 @@
 rule filter_microcin:
 	input:
-		"results/prodigal/prodigal_out.all.nr.faa"
+		"results/prodigal/prodigal_out_all_nr.faa"
 	output:
 		"results/microcins/filtered_nr.fa"
 	shell:

@@ -18,8 +18,8 @@ rule nonredundant_prodigal:
     input:
         expand("results/prodigal/{sample}.faa", sample=SAMPLES)
     output:
-        fasta = "results/prodigal/prodigal_out.all.nr.faa",
-        csv = "results/prodigal/prodigal_out.all.nr_expanded.csv"
+        fasta = "results/prodigal/prodigal_out_all_nr.faa",
+        csv = "results/prodigal/prodigal_out_all_nr_expanded.csv"
     run:
         hashDict = {}
         idDict = {}

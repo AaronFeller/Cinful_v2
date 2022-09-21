@@ -1,6 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule microcin_signal in line 79 of /home/aaron/Documents/UT_Austin/wilke_lab/test_env/MicSearch/workflow/rules/setup_inputs.smk:
-Missing input files for rule microcin_signal:
-    output: results/database/SP.verified.aln
-    affected files:
-        resources/input/SP.verified.pep
