@@ -1,0 +1,35 @@
+configfile: config.yaml
+
+import os
+import sys
+
+#from snakemake.utils import min_version
+#set minimum snakemake version
+#min_version("6.2.1")
+
+# setup config
+#configfile: "config/config.yaml"
+
+# setup report
+#report: "report/workflow.rst"
+
+# setup conda
+
+
+
+# setup global wildcards
+SAMPLES, = glob_wildcards("{sample}.fna")
+#ROOT = 
+
+# load rules
+include: "rules/setup_inputs.smk"
+include: "rules/prodigal.smk"
+include: "rules/nonredundant_prodigal.smk"
+include: "rules/filter_microcin.smk"
+include: "rules/ss_hmmer.smk"
+include: "rules/hmm_scan.smk"
+
+# target rules
+rule final:
+    input:
+        "ss_hmmsearch_tblout.txt"
