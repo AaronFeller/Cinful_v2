@@ -1,11 +1,11 @@
 #Create a Mafft alignment of signal sequences
 rule mafft_ss:
     input: 
-        "../../resources/input/ss_verified.fa"
+        "../resources/input/ss_verified.fa"
     output:
         config["outdir"] + "/results/mafft/ss_mafft.aln"
     threads:
-        workflow.cores * 0.75
+        3
     shell:
         "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
 
@@ -16,7 +16,7 @@ rule buildhmm_microcin_ss:
     output:
         config["outdir"] + "/results/signalSeq/ss.hmm"
     threads:
-        workflow.cores * 0.75
+        3
     shell:
         "hmmbuild --amino {output} {input}"
 
@@ -29,7 +29,7 @@ rule hmmsearch:
         tblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
         fa = config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa"
     threads:
-        workflow.cores * 0.75
+        3
     shell:
         "hmmsearch --cpu {threads} -A {output.fa} --tblout {output.tblout} {input.hmmfile} {input.seqdb}"
 
@@ -40,6 +40,6 @@ rule hmmsearch:
 #         seqdb = config["outdir"] + "/results/microcins/filtered_nr.fa"
 #     output:
 #         tblout = config["outdir"] + "/results/phmmer/ss_hmm_out.txt",
-#     threads:workflow.cores * 0.75
+#     threads:375
 #     shell:
 #         "phmmer --cpu {threads} --tblout {output.tblout} {input.seqfile} {input.seqdb}"

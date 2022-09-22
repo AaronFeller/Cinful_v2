@@ -9,9 +9,9 @@ def hasAllStandardAA(seq, alphabet="ACDEFGHIKLMNPQRSTVWY",ignore="*"):
 	return (set(seq) - set(alphabet+ignore)) == set()
 
 
-SAMPLES, = glob_wildcards("../../resources/genomes/{sample}.fna")
-if SAMPLES == []:
-	SAMPLES, = glob_wildcards(config["outdir"] + "/results/prodigal/{sample}.faa")
+# SAMPLES, = glob_wildcards("../resources/genomes/{sample}.fna")
+# if SAMPLES == []:
+# 	SAMPLES, = glob_wildcards(config["outdir"] + "/results/prodigal/{sample}.faa")
 
 
 rule nonredundant_prodigal:

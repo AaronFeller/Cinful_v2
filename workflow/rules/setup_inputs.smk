@@ -22,7 +22,7 @@ def fa2hashDF(fasta_file):
 
 rule write_CvaB:
 	input:
-		verified_CvaB = "resources/input/CvaB.verified.pep"
+		verified_CvaB = "../resources/input/CvaB.verified.pep"
 	output:
 		CvaB_fasta = config["outdir"] + "/results/database/CvaB.verified.pep",
 		CvaB_pepHash = config["outdir"] + "/results/database/CvaB.verified.pephash.csv"
@@ -36,7 +36,7 @@ rule write_CvaB:
 
 rule write_MFP:
 	input:
-		verified_MFP = "resources/input/MFP.verified.pep"
+		verified_MFP = "../resources/input/MFP.verified.pep"
 	output:
 		MFP_fasta = config["outdir"] + "/results/database/MFP.verified.pep",
 		MFP_pepHash = config["outdir"] + "/results/database/MFP.verified.pephash.csv"
@@ -50,7 +50,7 @@ rule write_MFP:
 
 rule write_microcins:
 	input:
-		verified_microcins = "resources/input/microcins.verified.pep"
+		verified_microcins = "../resources/input/microcins.verified.pep"
 	output:
 		microcin_fasta = config["outdir"] + "/results/database/Microcins.verified.pep",
 		microcin_pepHash = config["outdir"] + "/results/database/Microcins.verified.pephash.csv"
@@ -64,7 +64,7 @@ rule write_microcins:
 
 rule write_immunity_proteins:
 	input:
-		verified_immunity_proteins = "resources/input/immunity_proteins.verified.pep"
+		verified_immunity_proteins = "../resources/input/immunity_proteins.verified.pep"
 	output:
 		immunity_protein_fasta = config["outdir"] + "/results/database/immunity_proteins.verified.pep",
 		immunity_protein_pepHash = config["outdir"] + "/results/database/immunity_proteins.verified.pephash.csv"
@@ -78,7 +78,7 @@ rule write_immunity_proteins:
 
 rule microcin_signal:
 	input:
-		verified_SP = "resources/input/SP.verified.pep"
+		verified_SP = "../resources/input/SP.verified.pep"
 	output:
 		SP_alignment = config["outdir"] + "/results/database/SP.verified.aln"
 	run:

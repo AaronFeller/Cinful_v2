@@ -6,7 +6,7 @@ import sys
 #min_version("6.2.1")
 
 # setup config
-configfile: "../../config/config.yaml"
+configfile: "../config/config.yaml"
 
 # setup report
 #report: "report/workflow.rst"

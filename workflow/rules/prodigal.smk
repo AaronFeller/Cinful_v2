@@ -7,7 +7,7 @@ SAMPLES, = glob_wildcards("{sample}.fna")
 
 rule prodigal:
 	input:
-	    fna = "../../resources/genomes/{sample}.fna"
+	    fna = "{sample}.fna"
 	output:
 		gff3 = config["outdir"] + "/results/prodigal/{sample}.gff3",
 		cds = config["outdir"] + "/results/prodigal/{sample}.cds",
