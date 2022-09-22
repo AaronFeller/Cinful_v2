@@ -6,7 +6,7 @@ import sys
 #min_version("6.2.1")
 
 # setup config
-#configfile: "config/config.yaml"
+configfile: "../../config/config.yaml"
 
 # setup report
 #report: "report/workflow.rst"
@@ -26,9 +26,11 @@ include: "rules/prodigal.smk"
 include: "rules/nonredundant_prodigal.smk"
 include: "rules/filter_microcin.smk"
 include: "rules/hmm_scan.smk"
+include: "rules/merge_hmmscan.smk"
 
 # target rules
 rule final:
     input:
-        "results/hmmsearch/ss_hmmsearch_tblout.txt"
-        "results/hmmsearch/ss_hmmsearch.fa"
+        config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
+        config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa",
+        config["outdir"] + "/results/hmmsearch/hmm_hits.csv"

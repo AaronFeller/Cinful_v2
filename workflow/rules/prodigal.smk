@@ -7,10 +7,10 @@ SAMPLES, = glob_wildcards("{sample}.fna")
 
 rule prodigal:
 	input:
-	    fna = "resources/genomes/{sample}.fna"
+	    fna = "../../resources/genomes/{sample}.fna"
 	output:
-		gff3 = "results/prodigal/{sample}.gff3",
-		cds = "results/prodigal/{sample}.cds",
-		aa = "results/prodigal/{sample}.faa"
+		gff3 = config["outdir"] + "/results/prodigal/{sample}.gff3",
+		cds = config["outdir"] + "/results/prodigal/{sample}.cds",
+		aa = config["outdir"] + "/results/prodigal/{sample}.faa"
 	shell:
 		"prodigal -i {input.fna} -o {output.gff3} -a {output.aa} -d {output.cds}"

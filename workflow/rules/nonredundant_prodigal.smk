@@ -9,23 +9,23 @@ def hasAllStandardAA(seq, alphabet="ACDEFGHIKLMNPQRSTVWY",ignore="*"):
 	return (set(seq) - set(alphabet+ignore)) == set()
 
 
-SAMPLES, = glob_wildcards("resources/genomes/{sample}.fna")
+SAMPLES, = glob_wildcards("../../resources/genomes/{sample}.fna")
 if SAMPLES == []:
-	SAMPLES, = glob_wildcards("results/prodigal/{sample}.faa")
+	SAMPLES, = glob_wildcards(config["outdir"] + "/results/prodigal/{sample}.faa")
 
 
 rule nonredundant_prodigal:
     input:
-        expand("results/prodigal/{sample}.faa", sample=SAMPLES)
+        expand(config["outdir"] + "/results/prodigal/{sample}.faa", sample=SAMPLES)
     output:
-        fasta = "results/prodigal/prodigal_out_all_nr.faa",
-        csv = "results/prodigal/prodigal_out_all_nr_expanded.csv"
+        fasta = config["outdir"] + "/results/prodigal/prodigal_out_all_nr.faa",
+        csv = config["outdir"] + "/results/prodigal/prodigal_out_all_nr_expanded.csv"
     run:
         hashDict = {}
         idDict = {}
         print("INPUT:",input)
         for file in input:
-            sample = file.split("results/prodigal/")[1].strip(".faa")
+            sample = file.split(config["outdir"] + "/results/prodigal/")[1].strip(".faa")
             with open(file) as handle:
                 for seq_record in SeqIO.parse(handle, "fasta"):
                     sequence = str(seq_record.seq)

@@ -24,8 +24,8 @@ rule write_CvaB:
 	input:
 		verified_CvaB = "resources/input/CvaB.verified.pep"
 	output:
-		CvaB_fasta = "results/database/CvaB.verified.pep",
-		CvaB_pepHash = "results/database/CvaB.verified.pephash.csv"
+		CvaB_fasta = config["outdir"] + "/results/database/CvaB.verified.pep",
+		CvaB_pepHash = config["outdir"] + "/results/database/CvaB.verified.pephash.csv"
 	run:
 		verified_CvaB = input.verified_CvaB
 		verified_CvaB_SeqIO = SeqIO.parse(StringIO(open(verified_CvaB).read()), "fasta")
@@ -38,8 +38,8 @@ rule write_MFP:
 	input:
 		verified_MFP = "resources/input/MFP.verified.pep"
 	output:
-		MFP_fasta = "results/database/MFP.verified.pep",
-		MFP_pepHash = "results/database/MFP.verified.pephash.csv"
+		MFP_fasta = config["outdir"] + "/results/database/MFP.verified.pep",
+		MFP_pepHash = config["outdir"] + "/results/database/MFP.verified.pephash.csv"
 	run:
 		verified_MFP = input.verified_MFP
 		verified_MFP_SeqIO = SeqIO.parse(StringIO(open(verified_MFP).read()), "fasta")
@@ -52,8 +52,8 @@ rule write_microcins:
 	input:
 		verified_microcins = "resources/input/microcins.verified.pep"
 	output:
-		microcin_fasta = "results/database/Microcins.verified.pep",
-		microcin_pepHash = "results/database/Microcins.verified.pephash.csv"
+		microcin_fasta = config["outdir"] + "/results/database/Microcins.verified.pep",
+		microcin_pepHash = config["outdir"] + "/results/database/Microcins.verified.pephash.csv"
 	run:
 		verified_microcins = input.verified_microcins
 		verified_microcins_SeqIO = SeqIO.parse(StringIO(open(verified_microcins).read()), "fasta")
@@ -66,8 +66,8 @@ rule write_immunity_proteins:
 	input:
 		verified_immunity_proteins = "resources/input/immunity_proteins.verified.pep"
 	output:
-		immunity_protein_fasta = "results/database/immunity_proteins.verified.pep",
-		immunity_protein_pepHash = "results/database/immunity_proteins.verified.pephash.csv"
+		immunity_protein_fasta = config["outdir"] + "/results/database/immunity_proteins.verified.pep",
+		immunity_protein_pepHash = config["outdir"] + "/results/database/immunity_proteins.verified.pephash.csv"
 	run:
 		verified_immunity_proteins = input.verified_immunity_proteins
 		verified_immunity_proteins_SeqIO = SeqIO.parse(StringIO(open(verified_immunity_proteins).read()), "fasta")
@@ -80,7 +80,7 @@ rule microcin_signal:
 	input:
 		verified_SP = "resources/input/SP.verified.pep"
 	output:
-		SP_alignment = "results/database/SP.verified.aln"
+		SP_alignment = config["outdir"] + "/results/database/SP.verified.aln"
 	run:
 		verified_SP = open(input.verified_SP)
 		verified_SP_msa = AlignIO.read(StringIO(verified_SP.read()), "fasta")

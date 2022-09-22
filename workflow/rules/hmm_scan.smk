@@ -1,9 +1,9 @@
 #Create a Mafft alignment of signal sequences
 rule mafft_ss:
     input: 
-        "resources/input/ss_verified.fa"
+        "../../resources/input/ss_verified.fa"
     output:
-        "results/mafft/ss_mafft.aln"
+        config["outdir"] + "/results/mafft/ss_mafft.aln"
     threads:
         workflow.cores * 0.75
     shell:
@@ -12,22 +12,22 @@ rule mafft_ss:
 #Build the pHMM using microcin double glycine signal sequence
 rule buildhmm_microcin_ss:
     input:
-        "results/signalSeq/ss_mafft.aln"
+        config["outdir"] + "/results/mafft/ss_mafft.aln"
     output:
-        "results/signalSeq/ss.hmm"
+        config["outdir"] + "/results/signalSeq/ss.hmm"
     threads:
         workflow.cores * 0.75
     shell:
-        "hmmbuild --amino -g {output} {input}"
+        "hmmbuild --amino {output} {input}"
 
 
 rule hmmsearch:
     input:
-        hmmfile = "results/signalSeq/ss.hmm",
-        seqdb = "results/microcins/filtered_nr.fa"
+        hmmfile = config["outdir"] + "/results/signalSeq/ss.hmm",
+        seqdb = config["outdir"] + "/results/microcins/filtered_nr.fa"
     output:
-        tblout = "results/hmmsearch/ss_hmmsearch_tblout.txt",
-        fa = "results/hmmsearch/ss_hmmsearch.fa"
+        tblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
+        fa = config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa"
     threads:
         workflow.cores * 0.75
     shell:
@@ -36,10 +36,10 @@ rule hmmsearch:
 # This rule will run phmmer for each input sequence individually
 # rule phmmer_ss:
 #     input:
-#         seqfile = "results/signalSeq/ss_mafft.aln",
-#         seqdb = "results/microcins/filtered_nr.fa"
+#         seqfile = config["outdir"] + "/results/signalSeq/ss_mafft.aln",
+#         seqdb = config["outdir"] + "/results/microcins/filtered_nr.fa"
 #     output:
-#         tblout = "results/phmmer/ss_hmm_out.txt",
+#         tblout = config["outdir"] + "/results/phmmer/ss_hmm_out.txt",
 #     threads:workflow.cores * 0.75
 #     shell:
 #         "phmmer --cpu {threads} --tblout {output.tblout} {input.seqfile} {input.seqdb}"

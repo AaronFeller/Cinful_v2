@@ -78,7 +78,7 @@ def main():
     snakefile = f"{currentAbsPath}/workflow/Snakefile"
 
     # snakemake command to run
-    cmd = [ "python",
+    cmd = [ "python3",
             "-m",
             "snakemake",
             "--snakefile",
@@ -96,16 +96,16 @@ def main():
     try:
         sp.check_output(cmd)
         print("MicSearch finished succesfuly!\n")
-        all_hits = Path(workdir)/ outdir / "02_homology_results/all_merged.csv"
-        print(f"Now checking that any hits were identified in {all_hits}")
-        all_hitsDF = pd.read_csv(all_hits).sort_values(['component','bitscore'],ascending=False)
-        microcinDF = all_hitsDF[all_hitsDF["component"] == "microcins.verified" ]
-        CvaBDF = all_hitsDF[all_hitsDF["component"] == "CvaB.verified" ]
-        MFPDF = all_hitsDF[all_hitsDF["component"] == "MFP.verified" ]
-        print("\nFinal fasta results will be written to:",Path(workdir)/outdir/ "03_best_hits"/"fastas")
-        subDF2Fasta(microcinDF,"microcin",Path(workdir)/outdir)
-        subDF2Fasta(CvaBDF,"CvaB",Path(workdir)/outdir)
-        subDF2Fasta(MFPDF,"MFP",Path(workdir)/outdir)
+        # all_hits = Path(workdir)/ outdir / "02_homology_results/all_merged.csv"
+        # print(f"Now checking that any hits were identified in {all_hits}")
+        # all_hitsDF = pd.read_csv(all_hits).sort_values(['component','bitscore'],ascending=False)
+        # microcinDF = all_hitsDF[all_hitsDF["component"] == "microcins.verified" ]
+        # CvaBDF = all_hitsDF[all_hitsDF["component"] == "CvaB.verified" ]
+        # MFPDF = all_hitsDF[all_hitsDF["component"] == "MFP.verified" ]
+        # print("\nFinal fasta results will be written to:",Path(workdir)/outdir/ "03_best_hits"/"fastas")
+        # subDF2Fasta(microcinDF,"microcin",Path(workdir)/outdir)
+        # subDF2Fasta(CvaBDF,"CvaB",Path(workdir)/outdir)
+        # subDF2Fasta(MFPDF,"MFP",Path(workdir)/outdir)
     except sp.CalledProcessError as e:
         print(e.output)
 
