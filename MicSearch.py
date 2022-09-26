@@ -1,8 +1,6 @@
 import os
-import sys
 import subprocess as sp
 import argparse
-import pandas as pd
 from pathlib import Path
 from Bio import SeqIO
 from Bio.Seq import Seq
@@ -95,7 +93,7 @@ def main():
 
     try:
         sp.check_output(cmd)
-        print("MicSearch finished succesfuly!\n")
+        print("MicSearch finished successfully!\n")
         # all_hits = Path(workdir)/ outdir / "02_homology_results/all_merged.csv"
         # print(f"Now checking that any hits were identified in {all_hits}")
         # all_hitsDF = pd.read_csv(all_hits).sort_values(['component','bitscore'],ascending=False)
@@ -106,8 +104,8 @@ def main():
         # subDF2Fasta(microcinDF,"microcin",Path(workdir)/outdir)
         # subDF2Fasta(CvaBDF,"CvaB",Path(workdir)/outdir)
         # subDF2Fasta(MFPDF,"MFP",Path(workdir)/outdir)
-    except sp.CalledProcessError as e:
-        print(e.output)
+    except sp.CalledProcessError as error:
+        print(error.output)
 
 if __name__ == "__main__":
     main()
