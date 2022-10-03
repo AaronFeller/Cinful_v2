@@ -22,11 +22,15 @@ SAMPLES, = glob_wildcards("{sample}.fna")
 
 # load rules
 include: "rules/setup_inputs.smk"
-include: "rules/prodigal.smk"
-include: "rules/nonredundant_prodigal.smk"
-include: "rules/filter_microcin.smk"
+include: "rules/ORF_finder.smk"
+#include: "rules/filter_microcin.smk"
 include: "rules/hmm_scan.smk"
 include: "rules/merge_hmmscan.smk"
+#include: "rules/nonredundant_ORF.smk"
+
+
+#include: "rules/prodigal.smk"
+#include: "rules/nonredundant_prodigal.smk"
 
 # target rules
 rule final:
