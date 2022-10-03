@@ -24,7 +24,7 @@ rule buildhmm_microcin_ss:
 rule hmmsearch:
     input:
         hmmfile = config["outdir"] + "/results/signalSeq/ss.hmm",
-        seqdb = config["outdir"] + "/results/microcins/filtered_nr.fa"
+        seqdb = config["outdir"] + "/results/ORFs/GCF_000026285.1_ASM2628v2_genomic_ORFs_filtered.faa"
     output:
         tblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
         fa = config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa"
