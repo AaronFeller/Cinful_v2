@@ -14,25 +14,25 @@ def hasAllStandardAA(seq, alphabet="ACDEFGHIKLMNPQRSTVWY",ignore="*"):
 # 	SAMPLES, = glob_wildcards(config["outdir"] + "/results/prodigal/{sample}.faa")
 
 
-rule nonredundant_prodigal:
+rule merge_ORF_Finder:
     input:
         expand(config["outdir"] + "/results/ORFs/{sample}_ORFs_filtered.faa", sample=SAMPLES)
     output:
-        fasta = config["outdir"] + "/results/prodigal/prodigal_out_all_nr.faa",
-        csv = config["outdir"] + "/results/prodigal/prodigal_out_all_nr_expanded.csv"
+        fasta = config["outdir"] + "/results/ORFs/ORFs_filtered_all.faa",
+        csv = config["outdir"] + "/results/ORFs/ORFs_filtered_all.csv"
     run:
         hashDict = {}
         idDict = {}
         print("INPUT:",input)
         for file in input:
-            sample = file.split(config["outdir"] + "/results/prodigal/")[1].strip(".faa")
+            sample = file.split(config["outdir"] + "/results/ORFs/")[1].strip(".faa")
             with open(file) as handle:
                 for seq_record in SeqIO.parse(handle, "fasta"):
                     sequence = str(seq_record.seq)
-                    pephash = seqhash.seqhash(sequence.strip("*"),dna_type='PROTEIN')
+                    pephash = seqhash.seqhash(sequence,dna_type='PROTEIN')
                     hashDict[pephash] = sequence
-                    descriptionParts = seq_record.description.split("#")
-                    start = descriptionParts[1].strip()
+                    descriptionParts = seq_record.description.split(" ")
+                    start = descriptionParts[1].strip("")
                     stop = descriptionParts[2].strip()
                     strand = descriptionParts[3].strip()
                     contig = '_'.join(seq_record.id.split("_")[:-1])

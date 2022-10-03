@@ -20,21 +20,26 @@ SAMPLES, = glob_wildcards("{sample}.fna")
 
 #ROOT = 
 
-# load rules
+# RULES TO INCLUDE
 include: "rules/setup_inputs.smk"
 include: "rules/ORF_finder.smk"
-#include: "rules/filter_microcin.smk"
+include: "rules/nonredundant_ORF.smk"
 include: "rules/hmm_scan.smk"
 include: "rules/merge_hmmscan.smk"
-#include: "rules/nonredundant_ORF.smk"
 
 
+# No longer need to filter as this occurs in ORF_finder step (may remove later and reinstitute this rule for downstream gene finding)
+#include: "rules/filter_microcin.smk" 
+
+# No longer using Prodigal due to loss of ~30% of known microcins
 #include: "rules/prodigal.smk"
 #include: "rules/nonredundant_prodigal.smk"
 
-# target rules
+# TARGET OUTPUT
 rule final:
     input:
         config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
         config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa",
-        config["outdir"] + "/results/hmmsearch/hmm_hits.csv"
+        config["outdir"] + "/results/hmmsearch/hmm_hits.csv",
+        config["outdir"] + "/results/ORFs/ORFs_filtered_all.faa",
+        config["outdir"] + "/results/ORFs/ORFs_filtered_all.csv"

@@ -1,7 +1,7 @@
 rule merge_hmmscan:
     input:
         tblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
-        prodigal_all = config["outdir"] + "/results/prodigal/prodigal_out_all_nr_expanded.csv"
+        prodigal_all = config["outdir"] + "/results/ORFs/ORFs_filtered_all.csv"
     output:
         hmm_hits = config["outdir"] + "/results/hmmsearch/hmm_hits.csv"
     run:
