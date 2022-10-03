@@ -1,5 +1,3 @@
-threads_max = 4 
-
 #sets wildcards
 SAMPLES, = glob_wildcards("{sample}.fna")
 
