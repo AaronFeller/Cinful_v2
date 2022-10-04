@@ -28,11 +28,11 @@ with open(output_path, 'w') as output_file:
         # extracting ORF information from the label/name
         orf_sequence = str(rec.seq)
         orf_description = str(rec.description)
-        split_orf = re.split(r'[\_\.\_\.\(\) ]', orf_description)
-        location = split_orf[5]
-        split_location = re.split(r'[\[\-\]]', location)
-        start_loc = int(split_location[1])
-        end_loc = int(split_location[2])
+        split_orf = re.split(' ', orf_description)
+        location = split_orf[1].strip('(+)')
+        split_location = location.strip('[]').split('-')
+        start_loc = int(split_location[0])
+        end_loc = int(split_location[1].strip(']('))
 
         if len(orf_sequence) <= 150 and len(orf_sequence) > 30: #if the ORF is already within size limit, we include it.
             output_file.write(">" + orf_description + "\n")

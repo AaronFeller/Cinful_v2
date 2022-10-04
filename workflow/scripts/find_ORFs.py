@@ -4,14 +4,12 @@ import os
 import sys
 
 # Find all potential open reading frames in both strands.
-
-
-#genome_path = "colicinV_Ecoli/GCF_000026285.1_ASM2628v2_genomic.fna"
-#output_path = "colicinV_Ecoli/GCF_000026285.1_ORFer.fasta"
 genome_path = snakemake.input[0]
 output_path = snakemake.output[0]
 
 genome = SeqIO.parse(genome_path, "fasta")
+
+noncanonical = ['R', 'Y', 'K', 'M', 'S', 'W', 'B', 'D', 'H', 'V', 'N']
 
 gencode = { 'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
     'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
@@ -50,7 +48,24 @@ with open(output_path, 'w') as output_file:
                 for j in range(i, len(seq), 3):  # moving along the genome sequence every codon
                     codon = seq[j:j+3]
 
+                    # if 'N' in codon:
+                    #     continue
+
                     if len(codon) == 3:
+
+                        if found_start == False and any(x in noncanonical for x in codon):
+                            continue
+
+                        if found_start == True and any(x in noncanonical for x in codon):
+                            found_start = False
+                            end_loc = j + 3
+                            location = "[" + str(start_loc) + "-" + str(end_loc) + "]"
+                            length = len(orf)
+                            start = 'ATG'
+                            stop = 'Noncanonical base in sequencing'
+                            frame = i + 1
+                            continue
+
                         aa = gencode[codon]
 
                         if aa == 'M' and found_start == False:  # If we found a start for the first time after last ORF
