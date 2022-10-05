@@ -7,7 +7,7 @@ rule ORF_finder:
 	output:
 		config["outdir"] + "/results/ORFs/{sample}_ORFs.faa"
 	script:	
-		"../scripts/find_ORFs.py"
+		"../scripts/find_orfs.py"
 
 rule ORF_filter:
 	input:
@@ -15,4 +15,4 @@ rule ORF_filter:
 	output:
 		config["outdir"] + "/results/ORFs/{sample}_ORFs_filtered.faa"
 	script:
-		"../scripts/filter_ORFs.py"
+		"../scripts/filter_orfs.py"

@@ -2,10 +2,10 @@ import os
 import subprocess as sp
 import argparse
 from pathlib import Path
+import errno
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-import errno
 
 #Confirms the directory for input and output are true directories
 class readable_dir(argparse.Action):
