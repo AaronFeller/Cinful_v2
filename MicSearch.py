@@ -2,10 +2,10 @@ import os
 import subprocess as sp
 import argparse
 from pathlib import Path
-import errno
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+import errno
 
 #Confirms the directory for input and output are true directories
 class readable_dir(argparse.Action):
@@ -58,54 +58,61 @@ def subDF2Fasta(df, subName, baseDir,seqCol="seq", idCol = "cinful_id"):
 def main():
     # set up command line arguments
     parser = argparse.ArgumentParser(description='cinful')
-    parser.add_argument('-d', '--directory', action=readable_dir,required=True,
-        help='Must be a directory containing uncompressed FASTA formatted genome assemblies with .fna extension. Files within nested directories are fine')
-    parser.add_argument('-o', '--outDir', type=str,default="default_output",
-        help='This directory will contain all output files. It will be nested under the input directory.')
-    parser.add_argument('-t', '--threads', type=int, default=1,
-        help = 'This specifies how many threads to allow snakemake to have access to for parallelization')
+    parser.add_argument('-d', '--directory', action=readable_dir, required=True,
+        help= 'Must be a directory containing uncompressed FASTA formatted genome assemblies with .fna extension. Files within nested directories from refseq/genbank are acceptable.')
+    parser.add_argument('-o', '--outDir', type=str, required=True,
+        help= 'This directory will contain all output files. It will be nested under the input directory.')
+    parser.add_argument('-t', '--threads', type=int, default=4,
+        help = 'This specifies how many threads to allow snakemake to have access to for parallelization. Default is 1.')
+    parser.add_argument('-b', '--biased_composition_filter', type=bool, default=True,
+        help = 'This specifies boolian for whether to use the biased composition filter. Default is True.')
+    parser.add_argument('-e', '--evalue', type=int, default="100",
+        help = 'This specifies the evalue threshold for initial HMMER search. Best_hits filters to an evalue of 1 Default is 100.')
+    parser.add_argument('-n', '--num_queries', type=int, default="0",
+        help = 'This specifies the number of queries to use for HMMER calculation of evalue. Default is 0 (or true database size).')
+    
     # parser.add_argument('--snakemake_params', type=list, nargs='+')
     args = parser.parse_args()
 
     threads = args.threads
     workdir = args.directory
     outdir = args.outDir
+    biased_composition_filter = args.biased_composition_filter
+    evalue = args.evalue
+    num_queries = args.num_queries
 
     # absolute path of this file, needed to find snakefile
     currentAbsPath = os.path.dirname(os.path.abspath(__name__))
     snakefile = f"{currentAbsPath}/workflow/Snakefile"
 
     # snakemake command to run
-    cmd = [ "python3",
-            "-m",
-            "snakemake",
-            "--snakefile",
-            snakefile,
-            "-j",
-            str(threads),
-            "--directory",
-            workdir,
-            "--config",
-            f"outdir={outdir}", 
-            ]
+    cmd = ["python3",
+        "-m",
+        "snakemake",
+        "--snakefile",
+        snakefile,
+        "-j",
+        str(threads),
+        "--directory",
+        workdir,
+        "--config",
+        f"outdir={outdir}",
+        f"biased_composition_filter={biased_composition_filter}",
+        f"evalue={evalue}",
+        f"num_queries={num_queries}",
+        "--rerun-triggers",
+        "mtime",
+        ]
+
     print("Running the following command:")
     print(" ".join(cmd))
 
     try:
         sp.check_output(cmd)
         print("MicSearch finished successfully!\n")
-        # all_hits = Path(workdir)/ outdir / "02_homology_results/all_merged.csv"
-        # print(f"Now checking that any hits were identified in {all_hits}")
-        # all_hitsDF = pd.read_csv(all_hits).sort_values(['component','bitscore'],ascending=False)
-        # microcinDF = all_hitsDF[all_hitsDF["component"] == "microcins.verified" ]
-        # CvaBDF = all_hitsDF[all_hitsDF["component"] == "CvaB.verified" ]
-        # MFPDF = all_hitsDF[all_hitsDF["component"] == "MFP.verified" ]
-        # print("\nFinal fasta results will be written to:",Path(workdir)/outdir/ "03_best_hits"/"fastas")
-        # subDF2Fasta(microcinDF,"microcin",Path(workdir)/outdir)
-        # subDF2Fasta(CvaBDF,"CvaB",Path(workdir)/outdir)
-        # subDF2Fasta(MFPDF,"MFP",Path(workdir)/outdir)
     except sp.CalledProcessError as error:
-        print(error.output)
+        print('Encountered error while running snakemake.')
+        #print(error.output)
 
 if __name__ == "__main__":
     main()

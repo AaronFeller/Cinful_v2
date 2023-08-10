@@ -1,0 +1,24 @@
+{
+  "version": "1.2",
+  "dbname": "pblast_database.fa",
+  "dbtype": "Protein",
+  "db-version": 5,
+  "description": "../../resources/input/pblast_database.fa",
+  "number-of-letters": 17726,
+  "number-of-sequences": 269,
+  "last-updated": "2023-08-09T16:37:00",
+  "number-of-volumes": 1,
+  "bytes-total": 104887,
+  "bytes-to-cache": 20284,
+  "files": [
+    "pblast_database.fa.pdb",
+    "pblast_database.fa.phr",
+    "pblast_database.fa.pin",
+    "pblast_database.fa.pog",
+    "pblast_database.fa.pos",
+    "pblast_database.fa.pot",
+    "pblast_database.fa.psq",
+    "pblast_database.fa.ptf",
+    "pblast_database.fa.pto"
+  ]
+}

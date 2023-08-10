@@ -26,21 +26,30 @@ include: "rules/02_ORF_finder.smk"
 include: "rules/03_merge_ORFs.smk"
 include: "rules/04_hmm_scan.smk"
 include: "rules/05_merge_hmmscan.smk"
-
-
-# No longer need to filter as this occurs in ORF_finder step (may remove later and reinstitute this rule for downstream gene finding)
-#include: "rules/filter_microcin.smk" 
-
-# No longer using Prodigal due to loss of ~30% of known microcins
-#include: "rules/prodigal.smk"
-#include: "rules/nonredundant_prodigal.smk"
+include: "rules/06_analyze_outputs.smk"
+include: "rules/07_ss_hmm.smk"
+include: "rules/08_clean_outputs.smk"
 
 # TARGET OUTPUT
 rule final:
     input:
-        config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
-        config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa",
-        config["outdir"] + "/results/hmmsearch/hmm_hits.csv",
+# These outputs are from ORF finding
 #        config["outdir"] + "/results/ORFs/all_ORFs.faa",
 #        config["outdir"] + "/results/ORFs/all_ORFs.csv",
-        config["outdir"] + "/results/ORFs/all_AAs.faa"
+#        config["outdir"] + "/results/ORFs/all_AAs.faa"
+#        config["outdir"] + "/results/hmmsearch/hmm_hits.csv",
+#        config["outdir"] + "/results/blast/blastp_results.txt",
+#        config["outdir"] + "/results/final/hmm_hits_with_pident.csv",
+#        config["outdir"] + "/results/hmmsearch/hmm_hits.protein.fasta",
+#        config["outdir"] + "/results/final/hmm_hits_with_pident.csv",
+# These outputs are from DNA BLAST search to identify source organism
+#        config["outdir"] + "/results/hmmsearch/hmm_hits.dna.fasta",
+#        config["outdir"] + "/results/blast/blastn_results.txt",
+#        config["outdir"] + "/results/final/hmm_hits_with_pident_and_blastn.csv",
+# These outputs are from signal sequence HMM search over initial hmm hits
+        # config["outdir"] + "/results/hmmsearch/ss_domains.csv",
+        # config["outdir"] + "/results/hmmsearch/ss_gram_positive_domains.csv",
+        # config["outdir"] + "/results/hmmsearch/extracted_hits_domain.csv"
+        config["outdir"] + "/results/final/output.csv"
+
+

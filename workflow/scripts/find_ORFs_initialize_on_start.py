@@ -37,7 +37,7 @@ strands = ["(+)", "(-)"]
 
 # open(output_dna, 'w') as output_file_dna, 
 with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') as output_file_csv:
-    output_file_csv.write("id,pephash,sample,contig,start,stop,strand,dna,seq\n")
+    output_file_csv.write("id,pephash,dnahash,sample,contig,start,stop,strand,dna,seq\n")
 
     for rec in genome:
         seq = rec.seq
@@ -50,6 +50,7 @@ with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') a
             for i in range(0,3):   # 3 possible frames
                 found_start = True  # Initally, we have not found a start
                 first_codon = True # initially we're on the 'first codon'
+                start = 'NA'
                 start_loc = 0
                 end_loc = 0
                 for j in range(i, len(seq), 3):  # moving along the genome sequence every codon
@@ -58,7 +59,7 @@ with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') a
                         first_codon = False
                         if codon in ['TTA', 'TAG', 'TGA']:
                             found_start = False
-                            continue
+                        continue
                     # ensure full length codon
                     if len(codon) == 3:
 
@@ -120,7 +121,8 @@ with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') a
                             contig = descriptionParts[0].strip(">")
                             seqID = f"{sample}|{contig}|{start}:{stop}:{strand}"
                             pephash = seqhash.seqhash(orf, dna_type='PROTEIN')
-                            items = [seqID, pephash, sample, contig, start, stop, strand, str(dna), orf]
+                            dnahash = seqhash.seqhash(dna, dna_type='DNA')
+                            items = [seqID, pephash, dnahash, sample, contig, start, stop, strand, str(dna), orf]
                             items_text = ','.join(items)
                             output_file_csv.write(items_text + "\n")
 

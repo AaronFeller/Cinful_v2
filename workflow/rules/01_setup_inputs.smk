@@ -19,8 +19,6 @@ def fa2hashDF(fasta_file):
             outDict["sequence"].append(record.seq)
         return pd.DataFrame.from_dict(outDict)
 
-# input initial fasta with verified proteins and generate pephash
-
 rule write_CvaB:
 	input:
 		verified_CvaB = "../resources/input/CvaB.verified.pep"

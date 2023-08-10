@@ -1,4 +1,0 @@
-KeyError in line 27 of /stor/work/Wilke/afeller/MicSearch/workflow/rules/setup_inputs.smk:
-'outdir'
-  File "/stor/work/Wilke/afeller/MicSearch/workflow/Snakefile", line 24, in <module>
-  File "/stor/work/Wilke/afeller/MicSearch/workflow/rules/setup_inputs.smk", line 27, in <module>
