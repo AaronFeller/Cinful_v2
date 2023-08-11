@@ -70,6 +70,8 @@ def main():
         help = 'This specifies the evalue threshold for initial HMMER search. Best_hits filters to an evalue of 1 Default is 100.')
     parser.add_argument('-n', '--num_queries', type=int, default="0",
         help = 'This specifies the number of queries to use for HMMER calculation of evalue. Default is 0 (or true database size).')
+    parser.add_argument('-x', '--del_temp', action='store_true',
+        help = 'Including this will delete temporary files.')
     
     # parser.add_argument('--snakemake_params', type=list, nargs='+')
     args = parser.parse_args()
@@ -80,6 +82,7 @@ def main():
     biased_composition_filter = args.biased_composition_filter
     evalue = args.evalue
     num_queries = args.num_queries
+    del_temp = args.del_temp
 
     # absolute path of this file, needed to find snakefile
     currentAbsPath = os.path.dirname(os.path.abspath(__name__))
@@ -100,6 +103,7 @@ def main():
         f"biased_composition_filter={biased_composition_filter}",
         f"evalue={evalue}",
         f"num_queries={num_queries}",
+        f"del_temp={del_temp}",
         "--rerun-triggers",
         "mtime",
         ]
@@ -109,6 +113,12 @@ def main():
 
     try:
         sp.check_output(cmd)
+
+        if args.del_temp:
+            print("Deleting temporary files...")
+        else: 
+            print("Temporary files not deleted.")        
+
         print("MicSearch finished successfully!\n")
     except sp.CalledProcessError as error:
         print('Encountered error while running snakemake.')

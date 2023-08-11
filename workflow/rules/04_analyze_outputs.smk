@@ -3,7 +3,7 @@ rule makeblastdb:
     input:
         "../../resources/input/pblast_database.fa"
     output:
-        "../../resources/input/pblast_database.fa.phr"
+        temp("../../resources/input/pblast_database.fa.phr")
     shell:
         "makeblastdb -in {input} -dbtype prot -parse_seqids"
 
@@ -11,10 +11,10 @@ rule makeblastdb:
 # Generate FASTA file from hmmsearch results
 rule hmmsearch2fasta:
     input:
-        config["outdir"] + "/results/hmmsearch/hmm_hits.csv"
+        config["outdir"] + "/results/temp/hmmsearch/hmm_hits.csv"
     output:
-        config["outdir"] + "/results/hmmsearch/hmm_hits.protein.fasta",
-        config["outdir"] + "/results/hmmsearch/hmm_hits.dna.fasta"
+        config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta",
+        config["outdir"] + "/results/temp/hmmsearch/hmm_hits.dna.fasta"
     run:
         import pandas as pd
         from Bio import SeqIO
@@ -53,12 +53,11 @@ rule hmmsearch2fasta:
 #Run blastp
 rule blastp:
     input:
-        query = config["outdir"] + "/results/hmmsearch/hmm_hits.protein.fasta",
+        query = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta",
         database = "../../resources/input/pblast_database.fa",
         blastdb = "../../resources/input/pblast_database.fa.phr"
-
     output:
-        config["outdir"] + "/results/blast/blastp_results.txt"
+        config["outdir"] + "/results/temp/blast/blastp_results.txt"
     threads:
         workflow.cores * 0.9
     shell:
@@ -68,10 +67,10 @@ rule blastp:
 # Merge pid and hit with hmm_hits.csv
 rule merge_HMM_and_blastp:
     input:
-        blast = config["outdir"] + "/results/blast/blastp_results.txt",
-        hmm = config["outdir"] + "/results/hmmsearch/hmm_hits.csv"
+        blast = config["outdir"] + "/results/temp/blast/blastp_results.txt",
+        hmm = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.csv"
     output:
-        config["outdir"] + "/results/process_files/hmm_hits_with_pident.csv"
+        config["outdir"] + "/results/temp/process_files/hmm_hits_with_pident.csv"
     run:
         import pandas as pd
         blast = pd.read_csv(input.blast, sep='\t', header=None)

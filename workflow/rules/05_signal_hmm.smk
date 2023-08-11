@@ -1,12 +1,15 @@
 import Bio.SearchIO.HmmerIO as HmmerIO
 from Bio import SearchIO
 
+
+### THIS PORTION IS FOR THE 41 VALIDATED MICROCIN SIGNAL SEQUENCES ###
+
 #Create a Mafft alignment of signal sequences
 rule mafft_ss:
     input: 
         "../../resources/input/ss_verified.fa"
     output:
-        config["outdir"] + "/results/mafft/ss_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
     threads:
         workflow.cores * 0.9
     shell:
@@ -15,9 +18,9 @@ rule mafft_ss:
 #Build the pHMM using microcin sequences
 rule buildhmm_signal_sequence:
     input:
-        config["outdir"] + "/results/mafft/ss_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
     output:
-        config["outdir"] + "/results/hmmsearch/ss.hmm"
+        config["outdir"] + "/results/temp/hmmsearch/ss.hmm"
     threads:
         workflow.cores * 0.9
     shell:
@@ -26,12 +29,12 @@ rule buildhmm_signal_sequence:
 #Run hmmsearch to find signal sequences in the ORFs
 rule signal_sequence_hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/hmmsearch/ss.hmm",
-        seqdb = config["outdir"] + "/results/hmmsearch/hmm_hits.protein.fasta"
+        hmmfile = config["outdir"] + "/results/temp/hmmsearch/ss.hmm",
+        seqdb = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta"
     output:
-        tblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_tblout.txt",
-        domtblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_domtblout.txt",
-        fa = config["outdir"] + "/results/hmmsearch/ss_hmmsearch.fa"
+        tblout = config["outdir"] + "/results/temp/hmmsearch/ss_hmmsearch_tblout.txt",
+        domtblout = config["outdir"] + "/results/temp/hmmsearch/ss_hmmsearch_domtblout.txt",
+        fa = config["outdir"] + "/results/temp/hmmsearch/ss_hmmsearch.fa"
     threads:
         workflow.cores * 0.9
     shell:
@@ -39,9 +42,9 @@ rule signal_sequence_hmmsearch:
 
 rule extract_ss_hits:
     input:
-        domtblout = config["outdir"] + "/results/hmmsearch/ss_hmmsearch_domtblout.txt"
+        domtblout = config["outdir"] + "/results/temp/hmmsearch/ss_hmmsearch_domtblout.txt"
     output:
-        extracted_hits = config["outdir"] + "/results/hmmsearch/ss_domains.csv"
+        extracted_hits = config["outdir"] + "/results/temp/hmmsearch/ss_domains.csv"
     run:
         attributes = ['hit_id', 'evalue', 'hit_start', 'query_start']
         hits = defaultdict(list)
@@ -56,16 +59,14 @@ rule extract_ss_hits:
         extracted_df.to_csv(output.extracted_hits, index=False)
 
 
-
-
-### THIS PORTION USES GRAM POSITIVE SIGNALS ###
+### THIS PORTION IS FOR GRAM POSITIVE SIGNALS ###
 
 #Create a Mafft alignment of signal sequences
 rule mafft_ss_gram_positive:
     input: 
         "../../resources/input/ss_gram_positive.fa"
     output:
-        config["outdir"] + "/results/mafft/ss_gram_positive_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
     threads:
         workflow.cores * 0.9
     shell:
@@ -74,9 +75,9 @@ rule mafft_ss_gram_positive:
 #Build the pHMM using microcin sequences
 rule buildhmm_ss_gram_positive:
     input:
-        config["outdir"] + "/results/mafft/ss_gram_positive_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
     output:
-        config["outdir"] + "/results/hmmsearch/ss_gram_positive.hmm"
+        config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive.hmm"
     threads:
         workflow.cores * 0.9
     shell:
@@ -85,12 +86,12 @@ rule buildhmm_ss_gram_positive:
 #Run hmmsearch to find signal sequences in the ORFs
 rule ss_gram_positive_hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/hmmsearch/ss_gram_positive.hmm",
-        seqdb = config["outdir"] + "/results/hmmsearch/hmm_hits.protein.fasta"
+        hmmfile = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive.hmm",
+        seqdb = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta"
     output:
-        tblout = config["outdir"] + "/results/hmmsearch/ss_gram_positive_hmmsearch_tblout.txt",
-        domtblout = config["outdir"] + "/results/hmmsearch/ss_gram_positive_hmmsearch_domtblout.txt",
-        fa = config["outdir"] + "/results/hmmsearch/ss_gram_positive_hmmsearch.fa"
+        tblout = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_hmmsearch_tblout.txt",
+        domtblout = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_hmmsearch_domtblout.txt",
+        fa = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_hmmsearch.fa"
     threads:
         workflow.cores * 0.9
     shell:
@@ -98,9 +99,9 @@ rule ss_gram_positive_hmmsearch:
 
 rule extract_ss_gram_positive_hits:
     input:
-        domtblout = config["outdir"] + "/results/hmmsearch/ss_gram_positive_hmmsearch_domtblout.txt"
+        domtblout = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_hmmsearch_domtblout.txt"
     output:
-        extracted_hits = config["outdir"] + "/results/hmmsearch/ss_gram_positive_domains.csv"
+        extracted_hits = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_domains.csv"
     run:
         attributes = ['hit_id', 'evalue', 'hit_start', 'query_start']
         hits = defaultdict(list)

@@ -1,3 +1,5 @@
+
+# Inputs from snakemake config
 num_queries = config["num_queries"]
 biased_composition_filter = config["biased_composition_filter"]
 evalue = config["evalue"]
@@ -16,17 +18,16 @@ else:
 T = f'--cpu $threads '
 end = '--tblout {output.tblout} --domtblout {output.domtblout} {input.hmmfile} {input.seqdb} > {output.fa}'
 
+# Produce HMMER command
 hmmsearch = start + command + Z + bias + T + end
-
-# OLD: "threads=(({threads}-1)) && hmmsearch --cpu $threads --tblout {output.tblout} {input.hmmfile} {input.seqdb} > {output.fa}"
 
 
 #Create a Mafft alignment of signal sequences
 rule mafft_microcin:
-    input: 
-        "../../resources/input/microcins_verified_40.fa"
+    input:
+        "../../resources/input/microcins_verified.fa"
     output:
-        config["outdir"] + "/results/mafft/microcin_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
     threads:
         workflow.cores * 0.9
     shell:
@@ -35,9 +36,9 @@ rule mafft_microcin:
 #Build the pHMM using microcin sequences
 rule buildhmm_microcin:
     input:
-        config["outdir"] + "/results/mafft/microcin_mafft.aln"
+        config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
     output:
-        config["outdir"] + "/results/hmmsearch/microcin.hmm"
+        config["outdir"] + "/results/temp/hmmsearch/microcin.hmm"
     threads:
         workflow.cores * 0.9
     shell:
@@ -46,12 +47,12 @@ rule buildhmm_microcin:
 #Run hmmsearch to find signal sequences in the ORFs
 rule hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/hmmsearch/microcin.hmm",
-        seqdb = config["outdir"] + "/results/ORFs/all_AAs.faa"
+        hmmfile = config["outdir"] + "/results/temp/hmmsearch/microcin.hmm",
+        seqdb = config["outdir"] + "/results/temp/ORFs/all_AAs.faa"
     output:
-        tblout = config["outdir"] + "/results/hmmsearch/microcin_hmmsearch_tblout.txt",
-        domtblout = config["outdir"] + "/results/hmmsearch/microcin_hmmsearch_domtblout.txt",
-        fa = config["outdir"] + "/results/hmmsearch/microcin_hmmsearch.fa"
+        tblout = config["outdir"] + "/results/temp/hmmsearch/microcin_hmmsearch_tblout.txt",
+        domtblout = config["outdir"] + "/results/temp/hmmsearch/microcin_hmmsearch_domtblout.txt",
+        fa = config["outdir"] + "/results/temp/hmmsearch/microcin_hmmsearch.fa"
     threads:
         workflow.cores * 0.9
     shell:

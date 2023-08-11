@@ -5,9 +5,10 @@ import pandas as pd
 
 # Find all potential open reading frames in both strands.
 genome_path = snakemake.input[0]
+# This is used for BLAST search to full bacteria database
 #output_dna = snakemake.output[0]
 output_protein = snakemake.output[0]
-output_csv = snakemake.output[1]
+#output_csv = snakemake.output[1]
 
 genome = SeqIO.parse(genome_path, "fasta")
 
@@ -30,14 +31,14 @@ gencode = { 'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
     'TAC':'Y', 'TAT':'Y', 'TAA':'STOP', 'TAG':'STOP',
     'TGC':'C', 'TGT':'C', 'TGA':'STOP', 'TGG':'W' }
 
-orf_count = 0
+orf_count = 1
 orf = ""
 dna = ""
 strands = ["(+)", "(-)"]
 
 # open(output_dna, 'w') as output_file_dna, 
-with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') as output_file_csv:
-    output_file_csv.write("id,pephash,dnahash,sample,contig,start,stop,strand,dna,seq\n")
+with open (output_protein, 'w') as output_file_protein:#, open (output_csv, 'w') as output_file_csv:
+#    output_file_csv.write("id,pephash,dnahash,sample,contig,start,stop,strand,dna,seq\n")
 
     for rec in genome:
         seq = rec.seq
@@ -50,7 +51,7 @@ with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') a
             for i in range(0,3):   # 3 possible frames
                 found_start = True  # Initally, we have not found a start
                 first_codon = True # initially we're on the 'first codon'
-                start = 'NA'
+                start = '*'
                 start_loc = 0
                 end_loc = 0
                 for j in range(i, len(seq), 3):  # moving along the genome sequence every codon
@@ -108,23 +109,31 @@ with open (output_protein, 'w') as output_file_protein, open (output_csv, 'w') a
                             stop = codon
                             frame = i + 1
 
-                            label = str(">" + name[0] + "_ORF." + str(orf_count) + " " + location + strand + " type:" + sample + " DNA length:" + str(length) + " AA length:" + str(int(int(length)/3)) + " frame:" + str(frame) + " start:" + start + " stop:" + stop)
+                            pephash = seqhash.seqhash(orf, dna_type='PROTEIN')
+                            dnahash = seqhash.seqhash(dna, dna_type='DNA')
+
+
+                            label = (
+                                        f">{name[0]}_ORF.{orf_count}|{location}{strand}|{sample}|{length}|"
+                                        f"{int(int(length)/3)}|{start}|{stop}|{pephash}|{dnahash}|{str(dna)}|{str(orf)}"
+                                    )
+                            #str(">" + name[0] + "_ORF." + str(orf_count) + "|" + location + strand + "|type:" + sample + "|DNA_length:" + str(length) + "|AA_length:" + str(int(int(length)/3)) + "|frame:" + str(frame) + "|start:" + start + "|stop:" + stop + "|pephash:" + pephash + "|dnahash:" + dnahash)
+
                             #output_file_dna.write(label + "\n")
                             #output_file_dna.write(str(dna) + "\n")
                             output_file_protein.write(label + "\n")
                             output_file_protein.write(str(orf) + "\n")
 
-                            descriptionParts = label.split(" ")
-                            start = descriptionParts[1].split("]")[0].split("-")[0].strip("[")
-                            stop = descriptionParts[1].split("]")[0].split("-")[1]
-                            strand = descriptionParts[1].split("]")[1].strip("()")
-                            contig = descriptionParts[0].strip(">")
-                            seqID = f"{sample}|{contig}|{start}:{stop}:{strand}"
-                            pephash = seqhash.seqhash(orf, dna_type='PROTEIN')
-                            dnahash = seqhash.seqhash(dna, dna_type='DNA')
-                            items = [seqID, pephash, dnahash, sample, contig, start, stop, strand, str(dna), orf]
-                            items_text = ','.join(items)
-                            output_file_csv.write(items_text + "\n")
+                            # descriptionParts = label.split(" ")
+                            # start = descriptionParts[1].split("]")[0].split("-")[0].strip("[")
+                            # stop = descriptionParts[1].split("]")[0].split("-")[1]
+                            # strand = descriptionParts[1].split("]")[1].strip("()")
+                            # contig = descriptionParts[0].strip(">")
+                            # seqID = f"{sample}|{contig}|{start}:{stop}:{strand}"
+                            # items = [seqID, pephash, dnahash, sample, contig, start, stop, strand, str(dna), orf]
+                            # items_text = ','.join(items)
+                            # output_file_csv.write(items_text + "\n")
+
 
                             #reset variables for next ORF
                             orf = ""
