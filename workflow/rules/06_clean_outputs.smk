@@ -102,10 +102,11 @@ rule final_filter:
         # Shorten seq if gram positive hmm matched
         for index, row in sub_df.iterrows():
             if row.hit_start_gram_positive > 0:
-                position = int(row.hit_start_gram_positive)+int(row.query_start_gram_positive)
-                while all(elem not in ['M'] for elem in row.seq[position]):
-                    position -= 1
-                sub_df.at[index, 'seq'] = row.seq[position:]
+                if not pd.notna(row.hit_start_signal_sequence):
+                    position = int(row.hit_start_gram_positive)+int(row.query_start_gram_positive)
+                    while all(elem not in ['M'] for elem in row.seq[position]):
+                        position -= 1
+                    sub_df.at[index, 'seq'] = row.seq[position:]
 
         # remove all rows with query_start_microcin_domain > 140
         sub_df = sub_df[(sub_df['query_start_microcin_domain'] <= 5) | sub_df['query_start_microcin_domain'].isna()]
