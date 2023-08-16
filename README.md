@@ -33,18 +33,18 @@ conda activate <environment_name>
 python MicSearch.py -d resources/test_genome -o test_run -t <number_of_threads>
 ```
 
-Output from this run is contained in the test_genome folder.
+This test has been ran and is contained in the test_genome folder for comparison.
 
 ### Deleting temp files:
-You are free to manually delete temp files all contained in the temp folder inside of your output directory.
+You are able to manually delete temp files contained in the temp folder inside of your output directory.
 
-Additionally, including the argument `-x` will remove the temp folder. 
+Additionally, including the argument `-x` will remove the temp folder at runtime. 
 
-After analysis has completed without the `-x` command and you would like to remove the temp fiels, you can rerun the same command with `-x` and they will be removed.
+After analysis has completed without the `-x` command and you would like to remove the temp files, you can rerun the same command with `-x` and they will be removed.
 ```bash
 python MicSearch.py -d resources/test_genome -o test_run -t <number_of_threads> -x
 ```
 
 # Contributing
 
-MicSearch currently exists as a wrapper to a series of snakemake subroutines, so adding functionality to it is as simple as adding additional subroutines. If there are any subroutines that you see are needed feel free to raise an issue.
+MicSearch currently exists as a wrapper to a series of snakemake rules, so adding functionality to it is as simple as adding additional rules. If there are any additions that you feel are needed, feel free to raise an issue.
