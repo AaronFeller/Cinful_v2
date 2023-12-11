@@ -80,7 +80,7 @@ rule final_filter:
     input:
         config["outdir"] + "/results/temp/process_files/hmm_hits_with_domain_hits.csv"
     output:
-        config["outdir"] + "/results/final/unprocessed_output.csv"
+        config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
     run:
         #load df from csv of file hmm_hits_with_ss_hit.csv
         df = pd.read_csv(input[0])
@@ -97,6 +97,8 @@ rule final_filter:
                 position = int(row.hit_start_signal_sequence)+int(row.query_start_signal_sequence)
                 while all(elem not in ['M'] for elem in row.seq[position]):
                     position -= 1
+                    if position == 0:
+                        break
                 sub_df.at[index, 'seq'] = row.seq[position:]
                 
         # Shorten seq if gram positive hmm matched
@@ -106,6 +108,8 @@ rule final_filter:
                     position = int(row.hit_start_gram_positive)+int(row.query_start_gram_positive)
                     while all(elem not in ['M'] for elem in row.seq[position]):
                         position -= 1
+                        if position == 0:
+                            break
                     sub_df.at[index, 'seq'] = row.seq[position:]
 
         # remove all rows with query_start_microcin_domain > 140
@@ -118,6 +122,8 @@ rule final_filter:
                     position = int(row.hit_start_microcin_domain)+int(row.query_start_microcin_domain)
                     while all(elem not in ['M'] for elem in row.seq[position]):
                         position -= 1
+                        if position == 0:
+                            break
                     # Replace seq in sub_df with row.seq[position:]
                     sub_df.at[index, 'seq'] = row.seq[position:]
 
@@ -127,9 +133,68 @@ rule final_filter:
         # Write CSV
         sub_df.to_csv(output[0], index=False)
 
+
+# # Update to just run on unique hits
+# rule make_unique_hits_fasta:
+#     input:
+#         config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
+#     output:
+#         config["outdir"] + "/results/temp/blast/hmm_hits_dna_unique.fasta"
+#     run:
+#         #load df from csv of file hmm_hits_with_ss_hit.csv
+#         df = pd.read_csv(input[0], header=0, sep=',')
+#         df = df.drop_duplicates(subset=['dnahash'])
+
+#         #make fasta of hits
+#         with open(output[0], 'w') as f:
+#             for index, row in df.iterrows():
+#                 f.write(f">{row['dnahash']}\n{row['dna']}\n")
+
+# rule blastn:
+#     input:
+#         query = config["outdir"] + "/results/temp/blast/hmm_hits_dna_unique.fasta",
+#         database = "../../resources/database/nt.00.nhr",
+#         taxid_file = "../../resources/database/bacterial.ids"
+#     output:
+#         blastn_out = config["outdir"] + "/results/temp/blast/blastn_results.txt"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "blastn -task blastn -db ../../resources/database/nt -query {input.query} -strand 'plus' -taxidlist {input.taxid_file} -num_threads {threads} -max_target_seqs 1 -outfmt '6 qseqid sseqid stitle sacc evalue bitscore pident length mismatch gapopen' -out {output.blastn_out}"
+
+
+# rule merge_HMM_and_blastn:
+#     input:
+#         blast = config["outdir"] + "/results/temp/blast/blastn_results.txt",
+#         hmm = config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
+#     output:
+#         config["outdir"] + "/results/final/unprocessed_output.csv"
+#     run:
+#         # if blast file is empty, copy hmm file to output
+#         with open(input.blast) as f:
+#             first_line = f.readline()
+#             if first_line == "":
+#                 shell(f"cp {input.hmm} {output[0]}")
+#                 # add empty columns ['blastn_target_seqid', 'blastn_target_accession', 'blastn_bitscore', 'blastn_mismatch', 'blastn_gapopen'] to output
+#                 df = pd.read_csv(output[0])
+#                 df['blastn_target_seqid'] = np.nan
+#                 df['blastn_target_accession'] = np.nan
+#                 df['blastn_bitscore'] = np.nan
+#                 df['blastn_mismatch'] = np.nan
+#                 df['blastn_gapopen'] = np.nan
+#                 df.to_csv(output[0], index=False)
+                
+#             else:
+#                 blast = pd.read_csv(input.blast, sep='\t', header=None)
+#                 blast.columns = ["dnahash", "blastn_target_seqid", "blastn_target_name", "blastn_target_accession", "blastn_evalue", "blastn_bitscore", "blastn_pident", "blastn_length", "blastn_mismatch", "blastn_gapopen"]
+#                 hmm = pd.read_csv(input.hmm)
+#                 hmm = hmm.merge(blast, on="dnahash", how="left")
+#                 hmm.to_csv(output[0], index=False)
+
 rule clean_outputs:
     input:
-        config["outdir"] + "/results/final/unprocessed_output.csv"
+#        config["outdir"] + "/results/final/unprocessed_output.csv"
+        config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
     output:
         config["outdir"] + "/results/final/final_output.csv",
         config["outdir"] + "/results/temp/temp_file_check.txt"
@@ -156,10 +221,11 @@ rule clean_outputs:
 
         # remove columns
         df = df.drop(columns=['pephash', 'dnahash', 'dna', 'start', 'stop', 'length', 'mismatch', 'sample', 'dna_length',
-                              'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue_signal_sequence', 
-                              'hit_start_signal_sequence', 'query_start_signal_sequence', 'evalue_gram_positive', 
-                              'hit_start_gram_positive', 'query_start_gram_positive', 'evalue_microcin_domain', 
-                              'hit_start_microcin_domain', 'query_start_microcin_domain'])
+                                'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue_signal_sequence', 
+                                'hit_start_signal_sequence', 'query_start_signal_sequence', 'evalue_gram_positive', 
+                                'hit_start_gram_positive', 'query_start_gram_positive', 'evalue_microcin_domain', 
+                                'hit_start_microcin_domain', 'query_start_microcin_domain']) # , 'blastn_target_seqid', 
+                                # 'blastn_target_accession', 'blastn_bitscore', 'blastn_mismatch', 'blastn_gapopen'])
 
         # write csv
         df.to_csv(output[0], index=False)
@@ -167,8 +233,9 @@ rule clean_outputs:
         # Touch temp file
         shell("touch {output[1]}")
 
-del_temp = config["del_temp"]
 
+# Delete temp files if config[del_temp] == True
+del_temp = config["del_temp"]
 rule delete_temp_files:
     input:
         config["outdir"] + "/results/temp/temp_file_check.txt"

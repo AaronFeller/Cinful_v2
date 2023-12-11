@@ -33,21 +33,23 @@ rule mafft_microcin:
     shell:
         "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
 
-#Build the pHMM using microcin sequences
-rule buildhmm_microcin:
-    input:
-        config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
-    output:
-        config["outdir"] + "/results/temp/hmmsearch/microcin.hmm"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+
+# #Build the pHMM using microcin sequences
+# rule buildhmm_microcin:
+#     input:
+#         config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
+#     output:
+#         config["outdir"] + "/results/temp/hmmsearch/microcin.hmm"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+
 
 #Run hmmsearch to find signal sequences in the ORFs
 rule hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/temp/hmmsearch/microcin.hmm",
+        hmmfile = "../../resources/input/hmm_models/microcin.hmm",
         seqdb = config["outdir"] + "/results/temp/ORFs/all_AAs.faa"
     output:
         tblout = config["outdir"] + "/results/temp/hmmsearch/microcin_hmmsearch_tblout.txt",

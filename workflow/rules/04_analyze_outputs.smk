@@ -1,9 +1,9 @@
-#Generate blast db from input
+# Generate blast db from input
 rule makeblastdb:
     input:
-        "../../resources/input/pblast_database.fa"
+        "../../resources/input/pblast_database/pblast_database.fa"
     output:
-        temp("../../resources/input/pblast_database.fa.phr")
+        "../../resources/input/pblast_database/pblast_database.fa.phr"
     shell:
         "makeblastdb -in {input} -dbtype prot -parse_seqids"
 
@@ -34,7 +34,6 @@ rule hmmsearch2fasta:
             with open(output_file, "w") as output_handle:
                 SeqIO.write(records, output_handle, "fasta")
 
-
         df = pd.read_csv(input[0])
         protein_df = df[["pephash", "seq"]]
         #Trim * from seq
@@ -54,8 +53,8 @@ rule hmmsearch2fasta:
 rule blastp:
     input:
         query = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta",
-        database = "../../resources/input/pblast_database.fa",
-        blastdb = "../../resources/input/pblast_database.fa.phr"
+        database = "../../resources/input/pblast_database/pblast_database.fa",
+        blastdb = "../../resources/input/pblast_database/pblast_database.fa.phr"
     output:
         config["outdir"] + "/results/temp/blast/blastp_results.txt"
     threads:
@@ -79,13 +78,26 @@ rule merge_HMM_and_blastp:
         hmm = hmm.merge(blast, on="pephash", how='left')
         hmm.to_csv(output[0], index=False)
 
+#Run blastn:
+# rule blastn:
+#     input:
+#         query = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.dna.fasta",
+#         database = "../../resources/database/nt.00.nhr",
+#         accession_file = "../../resources/database/bacterial.ids"
+#     output:
+#         blastn_out = config["outdir"] + "/results/temp/blast/blastn_results.txt"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "blastn -query {input.query} -db ../../resources/database/nt -taxidlist {input.accession_file} -out {output.blastn_out} -outfmt '6 qseqid sseqid pident length mismatch gapopen evalue bitscore' -max_target_seqs 1 -num_threads {threads}"
 
+ 
 # rule merge_HMM_and_blastn:
 #     input:
-#         blast = config["outdir"] + "/results/blast/blastn_results.txt",
-#         hmm = config["outdir"] + "/results/final/hmm_hits_with_pident.csv"
+#         blast = config["outdir"] + "/results/temp/blast/blastn_results.txt",
+#         hmm = config["outdir"] + "/results/temp/process_files/hmm_hits_with_pident.csv"
 #     output:
-#         config["outdir"] + "/results/final/hmm_hits_with_pident_and_blastn.csv"
+#         config["outdir"] + "/results/temp/process_files/hmm_hits_with_pident_and_blastn.csv"
 #     run:
 #         import pandas as pd
 #         blast = pd.read_csv(input.blast, sep='\t', header=None)

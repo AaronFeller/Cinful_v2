@@ -4,32 +4,32 @@ from Bio import SearchIO
 
 ### THIS PORTION IS FOR THE 41 VALIDATED MICROCIN SIGNAL SEQUENCES ###
 
-#Create a Mafft alignment of signal sequences
-rule mafft_ss:
-    input: 
-        "../../resources/input/ss_verified.fa"
-    output:
-        config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
+# #Create a Mafft alignment of signal sequences
+# rule mafft_ss:
+#     input: 
+#         "../../resources/input/ss_verified.fa"
+#     output:
+#         config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
 
-#Build the pHMM using microcin sequences
-rule buildhmm_signal_sequence:
-    input:
-        config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
-    output:
-        config["outdir"] + "/results/temp/hmmsearch/ss.hmm"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+# #Build the pHMM using microcin sequences
+# rule buildhmm_signal_sequence:
+#     input:
+#         config["outdir"] + "/results/temp/mafft/ss_mafft.aln"
+#     output:
+#         config["outdir"] + "/results/temp/hmmsearch/ss.hmm"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
 
 #Run hmmsearch to find signal sequences in the ORFs
 rule signal_sequence_hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/temp/hmmsearch/ss.hmm",
+        hmmfile = "../../resources/input/hmm_models/ss.hmm",
         seqdb = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta"
     output:
         tblout = config["outdir"] + "/results/temp/hmmsearch/ss_hmmsearch_tblout.txt",
@@ -61,32 +61,32 @@ rule extract_ss_hits:
 
 ### THIS PORTION IS FOR GRAM POSITIVE SIGNALS ###
 
-#Create a Mafft alignment of signal sequences
-rule mafft_ss_gram_positive:
-    input: 
-        "../../resources/input/ss_gram_positive.fa"
-    output:
-        config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
+# #Create a Mafft alignment of signal sequences
+# rule mafft_ss_gram_positive:
+#     input: 
+#         "../../resources/input/ss_gram_positive.fa"
+#     output:
+#         config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
 
-#Build the pHMM using microcin sequences
-rule buildhmm_ss_gram_positive:
-    input:
-        config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
-    output:
-        config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive.hmm"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+# #Build the pHMM using microcin sequences
+# rule buildhmm_ss_gram_positive:
+#     input:
+#         config["outdir"] + "/results/temp/mafft/ss_gram_positive_mafft.aln"
+#     output:
+#         config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive.hmm"
+#     threads:
+#         workflow.cores * 0.9
+#     shell:
+#         "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
 
 #Run hmmsearch to find signal sequences in the ORFs
 rule ss_gram_positive_hmmsearch:
     input:
-        hmmfile = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive.hmm",
+        hmmfile = "../../resources/input/hmm_models/ss_gram_positive.hmm",
         seqdb = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta"
     output:
         tblout = config["outdir"] + "/results/temp/hmmsearch/ss_gram_positive_hmmsearch_tblout.txt",
