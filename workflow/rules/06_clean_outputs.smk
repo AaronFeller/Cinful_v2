@@ -187,6 +187,8 @@ rule final_filter:
 #             else:
 #                 blast = pd.read_csv(input.blast, sep='\t', header=None)
 #                 blast.columns = ["dnahash", "blastn_target_seqid", "blastn_target_name", "blastn_target_accession", "blastn_evalue", "blastn_bitscore", "blastn_pident", "blastn_length", "blastn_mismatch", "blastn_gapopen"]
+#                 # remove duplicate first column and keep row with lowest evalue
+#                 blast = blast.sort_values('blastn_evalue').drop_duplicates('dnahash', keep='first')
 #                 hmm = pd.read_csv(input.hmm)
 #                 hmm = hmm.merge(blast, on="dnahash", how="left")
 #                 hmm.to_csv(output[0], index=False)
