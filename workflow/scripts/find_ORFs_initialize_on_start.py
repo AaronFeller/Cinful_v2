@@ -1,7 +1,5 @@
-from Bio import SeqIO
-from Bio.Seq import Seq
-import seqhash
-import pandas as pd
+from Bio.SeqIO import parse
+from Bio.SeqUtils.CheckSum import seguid
 
 # Find all potential open reading frames in both strands.
 genome_path = snakemake.input[0]
@@ -10,7 +8,7 @@ genome_path = snakemake.input[0]
 output_protein = snakemake.output[0]
 #output_csv = snakemake.output[1]
 
-genome = SeqIO.parse(genome_path, "fasta")
+genome = parse(genome_path, "fasta")
 
 noncanonical = ['R', 'Y', 'K', 'M', 'S', 'W', 'B', 'D', 'H', 'V', 'N']
 
@@ -109,8 +107,8 @@ with open (output_protein, 'w') as output_file_protein:#, open (output_csv, 'w')
                             stop = codon
                             frame = i + 1
 
-                            pephash = seqhash.seqhash(orf, dna_type='PROTEIN')
-                            dnahash = seqhash.seqhash(dna, dna_type='DNA')
+                            pephash = seguid(orf)
+                            dnahash = seguid(dna)
 
 
                             label = (
