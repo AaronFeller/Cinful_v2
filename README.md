@@ -7,19 +7,19 @@ MicSearch is developed by the [Wilke lab](https://wilkelab.org/) at the [Departm
 
 ### Setting up conda environment:
 ```bash
-$ conda create --name <environment_name> python=3.8
-$ conda activate <environment_name>
+conda create --name <environment_name> python=3.8
+conda activate <environment_name>
 ```
 
 ### Installing dependencies:
 ```bash
-$ conda install mamba -c conda-forge
-$ mamba install biopython=1.79 blast=2.14 hmmer=3.3 mafft=7.508 numpy=1.24 pandas=1.5 snakemake=7.18 -c conda-forge -c bioconda
+conda install mamba -c conda-forge
+mamba install biopython=1.79 blast=2.14 hmmer=3.3 mafft=7.508 numpy=1.24 pandas=1.5 snakemake=7.18 -c conda-forge -c bioconda
 ```
 
 ### Downloading repository:
 ```bash
-$ git clone https://github.com/AaronFeller/MicSearch.git
+git clone https://github.com/AaronFeller/MicSearch.git
 ```
 ## Running MicSearch:
 
@@ -28,9 +28,9 @@ If downloaded properly, running `python MicSearch.py -h` should give you a list 
 
 Basic run:
 ```bash
-$ cd MicSearch
-$ conda activate <environment_name>
-$ python MicSearch.py -d resources/test_genome -o test_run -t <number_of_threads>
+cd MicSearch
+conda activate <environment_name>
+python MicSearch.py -d resources/test_genome -o test_run -t <number_of_threads>
 ```
 
 The precomputed results from this test are contained in the test_genome folder for your comparison.
