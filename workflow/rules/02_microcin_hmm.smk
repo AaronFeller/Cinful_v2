@@ -34,17 +34,22 @@ rule mafft_microcin:
         "mafft --auto --globalpair --maxiterate 1000 --reorder --amino {input} > {output}"
 
 
-# #Build the pHMM using microcin sequences
-# rule buildhmm_microcin:
-#     input:
-#         config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
-#     output:
-#         config["outdir"] + "/results/temp/hmmsearch/microcin.hmm"
-#     threads:
-#         workflow.cores * 0.9
-#     shell:
-#         "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+"""
+pHMM is now precomputed and stored in resources directory
+However, if you want to generate it from scratch, uncomment the following rule
 
+# Build the pHMM using microcin sequences
+rule buildhmm_microcin:
+    input:
+        config["outdir"] + "/results/temp/mafft/microcin_mafft.aln"
+    output:
+        config["outdir"] + "/results/temp/hmmsearch/microcin.hmm"
+    threads:
+        workflow.cores * 0.9
+    shell:
+        "hmmbuild --cpu {threads} --amino {output} {input}"# && hmmcalibrate {output}"
+
+"""
 
 #Run hmmsearch to find signal sequences in the ORFs
 rule hmmsearch:

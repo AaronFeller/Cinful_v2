@@ -13,9 +13,7 @@ rule ORF_finder:
     input:
         genomes = "{sample}.fna"
     output:
-        temp(config["outdir"] + "/results/temp/ORFs/{sample}_aminoAcid.faa")#,
-#		config["outdir"] + "/results/ORFs/{sample}_dna.faa",
-#		config["outdir"] + "/results/ORFs/{sample}_ORFs.csv"
+        temp(config["outdir"] + "/results/temp/ORFs/{sample}_aminoAcid.faa")
     script:
         "../scripts/find_ORFs_initialize_on_start.py"
 

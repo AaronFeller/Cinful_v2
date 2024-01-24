@@ -80,7 +80,7 @@ rule merge_HMM_and_blastp:
 
 
 """
-Note: Need to add API call for blastn to the workflow, previously ran on static database
+BLASTn now runs on the final output for time-saving purposes
 
 Run blastn:
 rule blastn:
@@ -109,5 +109,4 @@ rule merge_HMM_and_blastn:
         hmm = pd.read_csv(input.hmm)
         hmm = hmm.merge(blast, on="dnahash", how="left")
         hmm.to_csv(output[0], index=False)
-        
 """

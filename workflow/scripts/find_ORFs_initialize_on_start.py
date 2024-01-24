@@ -3,11 +3,7 @@ from Bio.SeqUtils.CheckSum import seguid
 
 # Find all potential open reading frames in both strands.
 genome_path = snakemake.input[0]
-# This is used for BLAST search to full bacteria database
-#output_dna = snakemake.output[0]
 output_protein = snakemake.output[0]
-#output_csv = snakemake.output[1]
-
 genome = parse(genome_path, "fasta")
 
 noncanonical = ['R', 'Y', 'K', 'M', 'S', 'W', 'B', 'D', 'H', 'V', 'N']
