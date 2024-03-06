@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 
 rule merge_domains_with_hits:
@@ -10,7 +9,7 @@ rule merge_domains_with_hits:
     output:
         final = config["outdir"] + "/results/temp/process_files/hmm_hits_with_domain_hits.csv"
     run:
-#Load hits
+        #Load hits
         hits_df = pd.read_csv(input.hits)
 
 # Load microcin signal sequence domains from HMM
@@ -75,7 +74,7 @@ rule merge_domains_with_hits:
         #write csv merged_df
         merged_df.to_csv(output.final, index=False)
 
-
+# Remove rows with evalue > 1 and rows with no hit_start
 rule final_filter:
     input:
         config["outdir"] + "/results/temp/process_files/hmm_hits_with_domain_hits.csv"
@@ -133,11 +132,6 @@ rule final_filter:
         # Write CSV
         sub_df.to_csv(output[0], index=False)
 
-"""
-This section of code incorporates the blastn step into the workflow. 
-It is currently commented out as it relies on the blastn database which is not included in the repository.
-The blastn database can be downloaded from the NCBI website and the path to the database can be changed in the config.yaml file.
-Future plans to add an API call to BLAST to run the blastn step.
 
 # Update to just run on unique hits
 rule make_unique_hits_fasta:
@@ -155,53 +149,60 @@ rule make_unique_hits_fasta:
             for index, row in df.iterrows():
                 f.write(f">{row['dnahash']}\n{row['dna']}\n")
 
-rule blastn:
-    input:
-        query = config["outdir"] + "/results/temp/blast/hmm_hits_dna_unique.fasta",
-        database = "../../resources/database/nt.00.nhr",
-        taxid_file = "../../resources/database/bacterial.ids"
-    output:
-        blastn_out = config["outdir"] + "/results/temp/blast/blastn_results.txt"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "blastn -task blastn -db ../../resources/database/nt -query {input.query} -strand 'plus' -taxidlist {input.taxid_file} -num_threads {threads} -max_target_seqs 1 -outfmt '6 qseqid sseqid stitle sacc evalue bitscore pident length mismatch gapopen' -out {output.blastn_out}"
+if config["use_blast"]:
+    rule blastn:
+        input:
+            query = config["outdir"] + "/results/temp/blast/hmm_hits_dna_unique.fasta",
+            database = "../../resources/database/nt.00.nhr",
+            taxid_file = "../../resources/database/bacterial.ids"
+        output:
+            blastn_out = config["outdir"] + "/results/temp/blast/blastn_results.txt"
+        threads:
+            workflow.cores * 0.9
+        shell:
+            "blastn -task blastn -db ../../resources/database/nt -query {input.query} -strand 'both' -taxidlist {input.taxid_file} -num_threads {threads} -max_target_seqs 1 -outfmt '6 qseqid sseqid stitle sacc evalue bitscore pident length mismatch gapopen' -out {output.blastn_out}"
 
-rule merge_HMM_and_blastn:
-    input:
-        blast = config["outdir"] + "/results/temp/blast/blastn_results.txt",
-        hmm = config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
-    output:
-        config["outdir"] + "/results/final/unprocessed_output.csv"
-    run:
-        # if blast file is empty, copy hmm file to output
-        with open(input.blast) as f:
-            first_line = f.readline()
-            if first_line == "":
-                shell(f"cp {input.hmm} {output[0]}")
-                # add empty columns ['blastn_target_seqid', 'blastn_target_accession', 'blastn_bitscore', 'blastn_mismatch', 'blastn_gapopen'] to output
-                df = pd.read_csv(output[0])
-                df['blastn_target_seqid'] = np.nan
-                df['blastn_target_accession'] = np.nan
-                df['blastn_bitscore'] = np.nan
-                df['blastn_mismatch'] = np.nan
-                df['blastn_gapopen'] = np.nan
-                df.to_csv(output[0], index=False)
-                
-            else:
-                blast = pd.read_csv(input.blast, sep='\t', header=None)
-                blast.columns = ["dnahash", "blastn_target_seqid", "blastn_target_name", "blastn_target_accession", "blastn_evalue", "blastn_bitscore", "blastn_pident", "blastn_length", "blastn_mismatch", "blastn_gapopen"]
-                # remove duplicate first column and keep row with lowest evalue
-                blast = blast.sort_values('blastn_evalue').drop_duplicates('dnahash', keep='first')
-                hmm = pd.read_csv(input.hmm)
-                hmm = hmm.merge(blast, on="dnahash", how="left")
-                hmm.to_csv(output[0], index=False)
-"""
+    rule merge_HMM_and_blastn:
+        input:
+            blast = config["outdir"] + "/results/temp/blast/blastn_results.txt",
+            hmm = config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
+        output:
+            config["outdir"] + "/results/final/unprocessed_output.csv"
+        run:
+            # if blast file is empty, copy hmm file to output
+            with open(input.blast) as f:
+                first_line = f.readline()
+                if first_line == "":
+                    shell(f"cp {input.hmm} {output[0]}")
+                    # add empty columns ['blastn_target_seqid', 'blastn_target_accession', 'blastn_bitscore', 'blastn_mismatch', 'blastn_gapopen'] to output
+                    df = pd.read_csv(output[0])
+                    df['blastn_target_seqid'] = np.nan
+                    df['blastn_target_accession'] = np.nan
+                    df['blastn_bitscore'] = np.nan
+                    df['blastn_mismatch'] = np.nan
+                    df['blastn_gapopen'] = np.nan
+                    df.to_csv(output[0], index=False)
+                    
+                else:
+                    blast = pd.read_csv(input.blast, sep='\t', header=None)
+                    blast.columns = ["dnahash", "blastn_target_seqid", "blastn_target_name", "blastn_target_accession", "blastn_evalue", "blastn_bitscore", "blastn_pident", "blastn_length", "blastn_mismatch", "blastn_gapopen"]
+                    # remove duplicate first column and keep row with lowest evalue
+                    blast = blast.sort_values('blastn_evalue').drop_duplicates('dnahash', keep='first')
+                    hmm = pd.read_csv(input.hmm)
+                    hmm = hmm.merge(blast, on="dnahash", how="left")
+                    hmm.to_csv(output[0], index=False)
+else:
+    rule copy_hmm_to_output:
+        input:
+            config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
+        output:
+            config["outdir"] + "/results/final/unprocessed_output.csv"
+        run:
+            shell(f"cp {input[0]} {output[0]}")
 
 rule clean_outputs:
     input:
-#        config["outdir"] + "/results/final/unprocessed_output.csv"
-        config["outdir"] + "/results/temp/hmmsearch/noblast_output.csv"
+        config["outdir"] + "/results/final/unprocessed_output.csv"
     output:
         config["outdir"] + "/results/final/final_output.csv",
         config["outdir"] + "/results/temp/temp_file_check.txt"
@@ -231,7 +232,7 @@ rule clean_outputs:
                                 'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue_signal_sequence', 
                                 'hit_start_signal_sequence', 'query_start_signal_sequence', 'evalue_gram_positive', 
                                 'hit_start_gram_positive', 'query_start_gram_positive', 'evalue_microcin_domain', 
-                                'hit_start_microcin_domain', 'query_start_microcin_domain']) # , 'blastn_target_seqid', 
+                                'hit_start_microcin_domain', 'query_start_microcin_domain']) #'blastn_target_seqid', 
                                 # 'blastn_target_accession', 'blastn_bitscore', 'blastn_mismatch', 'blastn_gapopen'])
 
         # write csv

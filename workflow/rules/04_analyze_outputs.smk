@@ -1,3 +1,6 @@
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+
 # Generate blast db from input
 rule makeblastdb:
     input:
@@ -7,7 +10,6 @@ rule makeblastdb:
     shell:
         "makeblastdb -in {input} -dbtype prot -parse_seqids"
 
-
 # Generate FASTA file from hmmsearch results
 rule hmmsearch2fasta:
     input:
@@ -16,10 +18,6 @@ rule hmmsearch2fasta:
         config["outdir"] + "/results/temp/hmmsearch/hmm_hits.protein.fasta",
         config["outdir"] + "/results/temp/hmmsearch/hmm_hits.dna.fasta"
     run:
-        import pandas as pd
-        from Bio import SeqIO
-        from Bio.Seq import Seq
-        from Bio.SeqRecord import SeqRecord
 
         def pandas_df_to_fasta(dataframe, header_column, sequence_column, output_file):
             records = []
@@ -38,6 +36,7 @@ rule hmmsearch2fasta:
         protein_df = df[["pephash", "seq"]]
         #Trim * from seq
         protein_df["seq"] = protein_df["seq"].str.replace("*", "", regex=False)
+
         #select unique rows based on pephash
         protein_df = protein_df.drop_duplicates(subset=["pephash"])
 
@@ -47,7 +46,6 @@ rule hmmsearch2fasta:
 
         pandas_df_to_fasta(protein_df, "pephash", "seq", output[0])
         pandas_df_to_fasta(dna_df, "dnahash", "dna", output[1])
-
 
 #Run blastp
 rule blastp:
@@ -61,7 +59,6 @@ rule blastp:
         workflow.cores * 0.9
     shell:
         "blastp -num_threads {threads} -db {input.database} -query {input.query} -out {output} -outfmt 6 -evalue 1 -max_target_seqs 1"
-
 
 # Merge pid and hit with hmm_hits.csv
 rule merge_HMM_and_blastp:
@@ -77,36 +74,3 @@ rule merge_HMM_and_blastp:
         hmm = pd.read_csv(input.hmm)
         hmm = hmm.merge(blast, on="pephash", how='left')
         hmm.to_csv(output[0], index=False)
-
-
-"""
-BLASTn now runs on the final output for time-saving purposes
-
-Run blastn:
-rule blastn:
-    input:
-        query = config["outdir"] + "/results/temp/hmmsearch/hmm_hits.dna.fasta",
-        database = "../../resources/database/nt.00.nhr",
-        accession_file = "../../resources/database/bacterial.ids"
-    output:
-        blastn_out = config["outdir"] + "/results/temp/blast/blastn_results.txt"
-    threads:
-        workflow.cores * 0.9
-    shell:
-        "blastn -query {input.query} -db ../../resources/database/nt -taxidlist {input.accession_file} -out {output.blastn_out} -outfmt '6 qseqid sseqid pident length mismatch gapopen evalue bitscore' -max_target_seqs 1 -num_threads {threads}"
-
-
-rule merge_HMM_and_blastn:
-    input:
-        blast = config["outdir"] + "/results/temp/blast/blastn_results.txt",
-        hmm = config["outdir"] + "/results/temp/process_files/hmm_hits_with_pident.csv"
-    output:
-        config["outdir"] + "/results/temp/process_files/hmm_hits_with_pident_and_blastn.csv"
-    run:
-        import pandas as pd
-        blast = pd.read_csv(input.blast, sep='\t', header=None)
-        blast.columns = ["dnahash", "evalue_blastn", "bitscore_blastn", "score_blastn", "length_blastn", "pident_blastn", "accession_blastn", "title_blastn", "taxids_blastn"]
-        hmm = pd.read_csv(input.hmm)
-        hmm = hmm.merge(blast, on="dnahash", how="left")
-        hmm.to_csv(output[0], index=False)
-"""
