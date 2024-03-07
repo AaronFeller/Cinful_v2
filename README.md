@@ -1,7 +1,7 @@
 # MicSearch
 A fully automated workflow for identification of microcins using HMMER.
 
-MicSearch is developed by the [Wilke lab](https://wilkelab.org/) at the [Department of Integrative Biology](https://integrativebio.utexas.edu/) in collaboration with the [Davies lab](https://bwdaviesutaustin.org/) at the [Department of Molecular Biosciences](https://molecularbiosci.utexas.edu/), both at [The University of Texas at Austin](https://www.utexas.edu/).
+MicSearch (Cinful v2) is developed by the [Wilke lab](https://wilkelab.org/) at the [Department of Integrative Biology](https://integrativebio.utexas.edu/) in collaboration with the [Davies lab](https://bwdaviesutaustin.org/) at the [Department of Molecular Biosciences](https://molecularbiosci.utexas.edu/), both at [The University of Texas at Austin](https://www.utexas.edu/).
 
 ## Installation
 
@@ -34,6 +34,10 @@ python MicSearch.py -d resources/test_genome -o test_run -t <number_of_threads>
 ```
 
 The precomputed results from this test are contained in the test_genome folder for your comparison.
+
+### File naming required
+This pipeline will only identify files that end in the extension '.fna'.
+If you are working with another extension, the simplest fix is to rename these files and add the .fna extension.
 
 ### Deleting temp files:
 You are able to manually delete temp files contained in the temp folder inside of your output directory.
