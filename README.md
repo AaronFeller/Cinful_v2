@@ -13,8 +13,7 @@ conda activate <environment_name>
 
 ### Installing dependencies:
 ```bash
-conda install mamba -c conda-forge
-mamba install biopython=1.79 blast=2.14 hmmer=3.3 mafft=7.508 numpy=1.24 pandas=1.5 snakemake=7.18 -c conda-forge -c bioconda
+conda install biopython=1.79 blast=2.14 hmmer=3.3 mafft=7.508 numpy=1.24 pandas=1.5 snakemake=7.18 -c conda-forge -c bioconda
 ```
 
 ### Downloading repository:
