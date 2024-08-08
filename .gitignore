@@ -1,3 +1,5 @@
 # Ignore tmp folder
 analysis/IBDMDB/tmp/
 blast_evalue.ipynb
+analysis/IBDMDB/data/Old
+analysis/Comparison/data/
