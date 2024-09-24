@@ -16,7 +16,14 @@ rule edit_contig_names:
     shell:
         """
         filename=$(basename {input.genomes}) &&
-        sed -i 's/ /_/g' {input.genomes} &&
-        sed -i "s/>/>{{$filename}}_/g" {input.genomes} &&
+        awk -v filename="$filename" '{{
+            gsub(/ /, "_");
+            if ($0 ~ /^>/) {{
+                print ">" "{{" filename "}}_" substr($0, 2);
+            }} else {{
+                print;
+            }}
+        }}' {input.genomes} > {input.genomes}.edited &&
+        mv {input.genomes}.edited {input.genomes} &&
         touch {output.checkfiles}
         """
